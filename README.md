@@ -8,9 +8,7 @@ Big thanks to gramps for his work and the GOG support team for answering all rel
 
 ## Documentation
 
-For now the module supports basic GOG api fuctionality, like initialization, signing in and setting achievements.
-
-
+For now the module supports basic GOG api fuctionality, like initialization, signing in and setting achievements: https://pixelriot.github.io/GodotGoG
 
 ---
 ## How-To
