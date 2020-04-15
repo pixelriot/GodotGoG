@@ -1,7 +1,7 @@
 # GodotGoG
 ## GOG module for Godot engine
 
-GOG api for the Godot game engine (version 3.x), for Windows, Linux and Mac platforms.
+GOG api for the Godot game engine (version 3.x), for Windows and Mac platforms. At the moment the GGO api does not suppport Linux but might do so in the future.
 
 The project and also the documentation is orientated toward the [GodotSteam project](https://github.com/Gramps/GodotSteam) to improve compatibility.
 Big thanks to gramps for his work and the GOG support team for answering all related questions.
