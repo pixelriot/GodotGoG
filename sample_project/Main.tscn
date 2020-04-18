@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+
+[node name="Main" type="Control"]
+script = ExtResource( 1 )
+
+[node name="Init" type="Button" parent="."]
+margin_left = 30.0
+margin_top = 20.0
+margin_right = 180.0
+margin_bottom = 50.0
+text = "Init GOG"
+
+[node name="Test" type="Button" parent="."]
+margin_left = 210.0
+margin_top = 20.0
+margin_right = 360.0
+margin_bottom = 50.0
+text = "Test"
+
+[node name="SetAchievement" type="Button" parent="."]
+margin_left = 30.0
+margin_top = 70.0
+margin_right = 180.0
+margin_bottom = 100.0
+text = "SetAchievement"
+
+[node name="RemoveAchievement" type="Button" parent="."]
+margin_left = 210.0
+margin_top = 70.0
+margin_right = 360.0
+margin_bottom = 100.0
+text = "RemoveAchievement"
+[connection signal="pressed" from="Init" to="." method="_on_Init_pressed"]
+[connection signal="pressed" from="Test" to="." method="_on_Test_pressed"]
+[connection signal="pressed" from="SetAchievement" to="." method="_on_SetAchievement_pressed"]
+[connection signal="pressed" from="RemoveAchievement" to="." method="_on_RemoveAchievement_pressed"]
