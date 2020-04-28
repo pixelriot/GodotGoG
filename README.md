@@ -48,3 +48,5 @@ From here you should be able to call various functions of GOG api. You should be
 ## License
 MIT license
 
+---  
+You can follow our own gamedev journey at https://twitter.com/monolithofminds
