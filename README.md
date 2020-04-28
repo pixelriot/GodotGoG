@@ -45,6 +45,38 @@ For now the module supports basic GOG api fuctionality, like initialization, sig
 
 From here you should be able to call various functions of GOG api. You should be able to look up the functions in Godot itself under the search section.
 
+### notes for OSX
+Since compiling everything on OSX is a bit tricky here are some errors you might run into.
+* error on export path with python 3:
+run 'export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/scons'
+before running scons.
+* rpath error:
+When executing the editor you might get the following error
+````
+dyld: Library not loaded: @rpath/libGalaxy.dylib
+  Referenced from: /Users/richi/Downloads/godot-3.1.2-stable_SteamGogModules/bin/./godot.osx.tools.64
+  Reason: image not found
+Abort trap: 6
+````
+To solve the error, cd into your bin folder and run 'install_name_tool -add_rpath @executable_path/. godot.osx.tools.64' on the editor executable and all OSX export templates.
+* packaging engine on OSX
+````
+user@host:~/godot$ cp -r misc/dist/osx_tools.app ./Godot.app
+user@host:~/godot$ mkdir -p Godot.app/Contents/MacOS
+user@host:~/godot$ cp bin/godot.osx.tools.64 Godot.app/Contents/MacOS/Godot
+user@host:~/godot$ chmod +x Godot.app/Contents/MacOS/Godot
+````
+* packaging templates on OSX
+````
+cp -r misc/dist/osx_template.app . 
+mkdir osx_template.app/Contents/MacOS 
+cp bin/godot.osx.opt.64 osx_template.app/Contents/MacOS/godot_osx_release.64 
+cp bin/godot.osx.opt.debug.64 osx_template.app/Contents/MacOS/godot_osx_debug.64 
+chmod +x osx_template.app/Contents/MacOS/godot_osx* 
+zip -q -9 -r osx.zip osx_template.app 
+rm -rf osx_template.app
+````
+
 ## License
 MIT license
 
