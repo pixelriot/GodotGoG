@@ -61,10 +61,10 @@ Abort trap: 6
 To solve the error, cd into your bin folder and run `install_name_tool -add_rpath @executable_path/. godot.osx.tools.64` on the editor executable and all OSX export templates.
 * packaging engine on OSX
 ````
-user@host:~/godot$ cp -r misc/dist/osx_tools.app ./Godot.app
-user@host:~/godot$ mkdir -p Godot.app/Contents/MacOS
-user@host:~/godot$ cp bin/godot.osx.tools.64 Godot.app/Contents/MacOS/Godot
-user@host:~/godot$ chmod +x Godot.app/Contents/MacOS/Godot
+cp -r misc/dist/osx_tools.app ./Godot.app
+mkdir -p Godot.app/Contents/MacOS
+cp bin/godot.osx.tools.64 Godot.app/Contents/MacOS/Godot
+chmod +x Godot.app/Contents/MacOS/Godot
 ````
 * packaging templates on OSX
 ````
