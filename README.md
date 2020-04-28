@@ -48,7 +48,7 @@ From here you should be able to call various functions of GOG api. You should be
 ### notes for OSX
 Since compiling everything on OSX is a bit tricky here are some errors you might run into.
 * error on export path with python 3:
-run 'export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/scons'
+run `export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/scons`
 before running scons.
 * rpath error:
 When executing the editor you might get the following error
@@ -58,7 +58,7 @@ dyld: Library not loaded: @rpath/libGalaxy.dylib
   Reason: image not found
 Abort trap: 6
 ````
-To solve the error, cd into your bin folder and run 'install_name_tool -add_rpath @executable_path/. godot.osx.tools.64' on the editor executable and all OSX export templates.
+To solve the error, cd into your bin folder and run `install_name_tool -add_rpath @executable_path/. godot.osx.tools.64` on the editor executable and all OSX export templates.
 * packaging engine on OSX
 ````
 user@host:~/godot$ cp -r misc/dist/osx_tools.app ./Godot.app
