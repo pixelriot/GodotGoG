@@ -59,7 +59,6 @@ Returns the user's nickname.
 `int GetPersonaState()`  
 Returns the user's state. 
 
-
 ## Callbacks/Signals
 `void OnAuthSuccess()`  
 Notification for the event of successful sign in.
@@ -71,4 +70,6 @@ Notification for the event of unsuccessful sign in.
 Notification for the event of loosing authentication. 
 
 
+---
 
+You can follow our gamedev journey at https://twitter.com/monolithofminds
