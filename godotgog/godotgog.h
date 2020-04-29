@@ -18,34 +18,34 @@ public:
 	~GOG();
 
 	//Initialization
-	Error Init(String CLIENT_ID, String CLIENT_SECRET);
-	void ProcessData();
-	void Shutdown();
+	Error init(String CLIENT_ID, String CLIENT_SECRET);
+	void process_data();
+	void shutdown();
 
 	//User
-	uint64_t GetGalaxyID();
-	void SignIn();
-	void SignOut();
-	bool SignedIn();
-	bool IsLoggedOn();
+	uint64_t get_galaxy_id();
+	void sign_in();
+	void sign_out();
+	bool signed_in();
+	bool is_logged_out();
 
 	//Stats & Achievements
-	void ClearAchievement(const String &achievement_id);
-	String GetAchievementDescription(const String &achievement_id);
-	String GetAchievementDisplayName(const String &achievement_id);
-	uint32_t GetUserTimePlayed();
-	bool IsAchievementVisible(const String &achievement_id);
-	void SetAchievement(const String &achievement_id);
+	void clear_achievement(const String &achievement_id);
+	String get_achievement_description(const String &achievement_id);
+	String get_achievement_display_name(const String &achievement_id);
+	uint32_t get_user_time_played();
+	bool is_achievement_visible(const String &achievement_id);
+	void set_achievement(const String &achievement_id);
 
 	//Friends
-	String GetPersonaName();
-	int GetPersonaState();
+	String get_persona_name();
+	int get_persona_state();
 
 private:
 	//callbacks
-	void OnAuthSuccess() override;
-	void OnAuthFailure(galaxy::api::IAuthListener::FailureReason failureReason) override;
-	void OnAuthLost() override;
+	void on_auth_success() override;
+	void on_auth_failure(galaxy::api::IAuthListener::FailureReason failureReason) override;
+	void on_auth_lost() override;
 };
 
 #endif // GODOTGOG_H
