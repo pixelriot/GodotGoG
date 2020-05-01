@@ -12,29 +12,29 @@ GOG *GOG::singleton = NULL;
 
 void GOG::_bind_methods() {
 	//Initialization
-	ClassDB::bind_method(D_METHOD("Init", "CLIENT_ID", "CLIENT_SECRET"), &GOG::Init);
-	ClassDB::bind_method(D_METHOD("ProcessData"), &GOG::ProcessData);
-	ClassDB::bind_method(D_METHOD("Shutdown"), &GOG::Shutdown);
+	ClassDB::bind_method(D_METHOD("init", "CLIENT_ID", "CLIENT_SECRET"), &GOG::Init);
+	ClassDB::bind_method(D_METHOD("process_data"), &GOG::ProcessData);
+	ClassDB::bind_method(D_METHOD("shutdown"), &GOG::Shutdown);
 	//User
-	ClassDB::bind_method(D_METHOD("GetGalaxyID"), &GOG::GetGalaxyID);
-	ClassDB::bind_method(D_METHOD("SignIn"), &GOG::SignIn);
-	ClassDB::bind_method(D_METHOD("SignOut"), &GOG::SignOut);
-	ClassDB::bind_method(D_METHOD("SignedIn"), &GOG::SignedIn);
-	ClassDB::bind_method(D_METHOD("IsLoggedOn"), &GOG::IsLoggedOn);
+	ClassDB::bind_method(D_METHOD("get_galaxy_id"), &GOG::GetGalaxyID);
+	ClassDB::bind_method(D_METHOD("sign_in"), &GOG::SignIn);
+	ClassDB::bind_method(D_METHOD("sign_out"), &GOG::SignOut);
+	ClassDB::bind_method(D_METHOD("signed_in"), &GOG::SignedIn);
+	ClassDB::bind_method(D_METHOD("is_logged_out"), &GOG::IsLoggedOn);
 	//Stats & Achievements
-	ClassDB::bind_method(D_METHOD("ClearAchievement", "achievement_id"), &GOG::ClearAchievement);
-	ClassDB::bind_method(D_METHOD("GetAchievementDescription", "achievement_id"), &GOG::GetAchievementDescription);
-	ClassDB::bind_method(D_METHOD("GetAchievementDisplayName", "achievement_id"), &GOG::GetAchievementDisplayName);
-	ClassDB::bind_method(D_METHOD("GetUserTimePlayed"), &GOG::GetUserTimePlayed);
-	ClassDB::bind_method(D_METHOD("IsAchievementVisible", "achievement_id"), &GOG::IsAchievementVisible);
-	ClassDB::bind_method(D_METHOD("SetAchievement", "achievement_id"), &GOG::SetAchievement);
+	ClassDB::bind_method(D_METHOD("clear_achievement", "achievement_id"), &GOG::ClearAchievement);
+	ClassDB::bind_method(D_METHOD("get_achievement_description", "achievement_id"), &GOG::GetAchievementDescription);
+	ClassDB::bind_method(D_METHOD("get_achievement_display_name", "achievement_id"), &GOG::GetAchievementDisplayName);
+	ClassDB::bind_method(D_METHOD("get_user_time_played"), &GOG::GetUserTimePlayed);
+	ClassDB::bind_method(D_METHOD("is_achievement_visible", "achievement_id"), &GOG::IsAchievementVisible);
+	ClassDB::bind_method(D_METHOD("set_achievement", "achievement_id"), &GOG::SetAchievement);
 	//Friends
-	ClassDB::bind_method(D_METHOD("GetPersonaName"), &GOG::GetPersonaName);
-	ClassDB::bind_method(D_METHOD("GetPersonaState"), &GOG::GetPersonaState);
+	ClassDB::bind_method(D_METHOD("get_persona_name"), &GOG::GetPersonaName);
+	ClassDB::bind_method(D_METHOD("get_persona_state"), &GOG::GetPersonaState);
 	//Signals
-	ADD_SIGNAL(MethodInfo("authSuccess"));
-	ADD_SIGNAL(MethodInfo("authFailure"));
-	ADD_SIGNAL(MethodInfo("authLost"));
+	ADD_SIGNAL(MethodInfo("auth_success"));
+	ADD_SIGNAL(MethodInfo("auth_failure"));
+	ADD_SIGNAL(MethodInfo("auth_lost"));
 }
 
 //Initialization
@@ -51,7 +51,7 @@ GOG::~GOG() {
 	singleton = NULL;
 }
 
-Error GOG::Init(String CLIENT_ID, String CLIENT_SECRET) {
+Error GOG::init(String CLIENT_ID, String CLIENT_SECRET) {
 	std::cout << "\nInitializing GoG Galaxy ...\n";
 	galaxy::api::Init({ CLIENT_ID.utf8().get_data(), CLIENT_SECRET.utf8().get_data() });
 	if (galaxy::api::GetError()) {
@@ -66,21 +66,21 @@ Error GOG::Init(String CLIENT_ID, String CLIENT_SECRET) {
 	}
 }
 
-void GOG::ProcessData() {
+void GOG::process_data() {
 	galaxy::api::ProcessData();
 }
 
-void GOG::Shutdown() {
+void GOG::shutdown() {
 	galaxy::api::Shutdown();
 }
 
 //User
-uint64_t GOG::GetGalaxyID() {
+uint64_t GOG::get_galaxy_id() {
 	galaxy::api::GalaxyID galaxyID = galaxy::api::User()->GetGalaxyID();
 	return galaxyID.GetRealID();
 }
 
-void GOG::SignIn() {
+void GOG::sign_in() {
 	if (galaxy::api::IsFullyInitialized) {
 		std::cout << "\nSigning in ...\n";
 		galaxy::api::User()->SignInGalaxy(false, this);
@@ -96,19 +96,19 @@ void GOG::SignIn() {
 	}
 }
 
-void GOG::SignOut() {
+void GOG::sign_out() {
 	if (galaxy::api::IsFullyInitialized)
 		galaxy::api::User()->SignOut();
 }
 
-bool GOG::SignedIn() {
+bool GOG::signed_in() {
 	if (galaxy::api::IsFullyInitialized)
 		return galaxy::api::User()->SignedIn();
 	else
 		return false;
 }
 
-bool GOG::IsLoggedOn() {
+bool GOG::is_logged_out() {
 	if (galaxy::api::IsFullyInitialized)
 		return galaxy::api::User()->IsLoggedOn();
 	else
@@ -116,29 +116,29 @@ bool GOG::IsLoggedOn() {
 }
 
 //Stats & Achievements
-void GOG::ClearAchievement(const String &achievement_id) {
+void GOG::clear_achievement(const String &achievement_id) {
 	galaxy::api::Stats()->RequestUserStatsAndAchievements(galaxy::api::User()->GetGalaxyID());
 	galaxy::api::Stats()->ClearAchievement(achievement_id.utf8().get_data());
 	galaxy::api::Stats()->StoreStatsAndAchievements();
 }
 
-String GOG::GetAchievementDescription(const String &achievement_id) {
+String GOG::get_achievement_description(const String &achievement_id) {
 	return galaxy::api::Stats()->GetAchievementDescription(achievement_id.utf8().get_data());
 }
 
-String GOG::GetAchievementDisplayName(const String &achievement_id) {
+String GOG::get_achievement_display_name(const String &achievement_id) {
 	return galaxy::api::Stats()->GetAchievementDisplayName(achievement_id.utf8().get_data());
 }
 
-uint32_t GOG::GetUserTimePlayed() {
+uint32_t GOG::get_user_time_played() {
 	return galaxy::api::Stats()->GetUserTimePlayed();
 }
 
-bool GOG::IsAchievementVisible(const String &achievement_id) {
+bool GOG::is_achievement_visible(const String &achievement_id) {
 	return galaxy::api::Stats()->IsAchievementVisible(achievement_id.utf8().get_data());
 }
 
-void GOG::SetAchievement(const String &achievement_id) {
+void GOG::set_achievement(const String &achievement_id) {
 	galaxy::api::Stats()->RequestUserStatsAndAchievements(galaxy::api::User()->GetGalaxyID());
 	galaxy::api::Stats()->SetAchievement(achievement_id.utf8().get_data());
 	galaxy::api::Stats()->StoreStatsAndAchievements();
@@ -147,11 +147,11 @@ void GOG::SetAchievement(const String &achievement_id) {
 }
 
 //Friends
-String GOG::GetPersonaName() {
+String GOG::get_persona_name() {
 	return galaxy::api::Friends()->GetPersonaName();
 }
 
-int GOG::GetPersonaState() {
+int GOG::get_persona_state() {
 	//Enum
 	//PERSONA_STATE_OFFLINE User is not currently logged on.
 	//PERSONA_STATE_ONLINE 	User is logged on.
@@ -159,15 +159,15 @@ int GOG::GetPersonaState() {
 }
 
 //Signals
-void GOG::OnAuthSuccess() {
+void GOG::on_auth_success() {
 	galaxy::api::Stats()->RequestUserStatsAndAchievements(galaxy::api::User()->GetGalaxyID());
-	emit_signal("authSuccess");
+	emit_signal("auth_success");
 }
 
-void GOG::OnAuthFailure(galaxy::api::IAuthListener::FailureReason) {
-	emit_signal("authFailure");
+void GOG::on_auth_failure(galaxy::api::IAuthListener::FailureReason) {
+	emit_signal("auth_failure");
 }
 
-void GOG::OnAuthLost() {
-	emit_signal("authLost");
+void GOG::on_auth_lost() {
+	emit_signal("auth_lost");
 }
